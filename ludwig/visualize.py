@@ -34,7 +34,7 @@ from ludwig.utils.data_utils import load_json, load_from_file
 from ludwig.utils.print_utils import logging_level_registry
 
 
-def learning_curves(training_statistics, field, model_names=None, **kwargs):
+def learning_curves(training_statistics, field, save, model_names=None, **kwargs):
     if len(training_statistics) < 1:
         logging.error('No training_statistics provided')
         return
@@ -59,7 +59,7 @@ def learning_curves(training_statistics, field, model_names=None, **kwargs):
                      for learning_stats in training_statistics_per_model_name],
                     [learning_stats['validation'][field][metric]
                      for learning_stats in training_statistics_per_model_name],
-                    metric, model_names,
+                    metric, save, model_names,
                     title='Learning Curves {}'.format(field)
                 )
 
@@ -1772,6 +1772,12 @@ def cli(sys_argv):
         default='info',
         help='the level of logging to use',
         choices=['critical', 'error', 'warning', 'info', 'debug', 'notset']
+    )
+    parser.add_argument(
+       '--save',
+       action='store_true',
+       default=False,
+       help='directory in which to save visualizations'
     )
 
     args = parser.parse_args(sys_argv)

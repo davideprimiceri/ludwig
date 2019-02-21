@@ -41,7 +41,7 @@ from mpl_toolkits.mplot3d import Axes3D
 # plt.rc('ytick', labelsize='x-large')
 # plt.rc('axes', labelsize='x-large')
 
-def lerning_curves_plot(train_values, vali_values, metric, algorithm_names=None,
+def lerning_curves_plot(train_values, vali_values, metric, save, algorithm_names=None,
                         title=None):
     num_algorithms = len(train_values)
     max_len = max([len(tv) for tv in train_values])
@@ -78,7 +78,10 @@ def lerning_curves_plot(train_values, vali_values, metric, algorithm_names=None,
 
     ax.legend()
     plt.tight_layout()
-    plt.show()
+    if save:
+        fig.savefig(title+'.png')
+    else:
+        plt.show()
 
 
 def compare_classifiers_plot(scores, metrics, algoritm_names=None,
